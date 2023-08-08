@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pride Flags</title>
+    <script src="index.cjs"></script>
+</head>
+<style>
+    uxp-panel {
+        padding: 0 1em;
+        overflow-y: auto;
+    }
+
+    header, footer {
+        display: block;
+    }
+
+    sp-textfield {
+        width: 100%;
+    }
+
+    img {
+        border-radius: 4px;
+    }
+
+    body {
+        --info: #5BCFFB;
+        --invalid: #F5A9B8;
+    }
+
+/*    Style the .alert with the .alert-text*/
+    .alert {
+        padding: 4px 0;
+        margin-left: -20px;
+        margin-right: -20px;
+        /*Yellow*/
+        background-color: var(--info);
+        margin-bottom: 15px;
+    }
+
+    .alert__invalid {
+        background-color: var(--invalid);
+    }
+
+    .alert-text {
+        display: block;
+        margin: 4px 0;
+        padding: 0 20px;
+        color: black;
+    }
+</style>
+
+<body>
+<uxp-panel panelid="showPanel">
+    <header>
+        <sp-heading>Pride Flags</sp-heading>
+        <sp-body>Add pride flags to your document and show support for the LGBTQIA+ community 🏳️‍⚧️🏳️‍🌈!</sp-body>
+    </header>
+<!--
+    <sp-textfield id="txt-message" placeholder="Protect trans kids!">
+        <sp-label slot="label">Text Message</sp-label>
+    </sp-textfield>
+    <br/>
+    <sp-checkbox id="cb-padding">Add padding around the text message</sp-checkbox>
+    <br/>
+-->
+    <div class="alert" id="selection-status-alert">
+        <sp-body class="alert-text">
+            Mode: <span id="mode">Loading...</span>
+        </sp-body>
+    </div>
+    <sp-heading size="XS">General pride flags</sp-heading>
+    <sp-action-button id="btn-rainbow">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/rainbow.svg" alt="Rainbow flag">
+        Add a rainbow flag
+    </sp-action-button>
+    <sp-heading size="XS">Sexual and Romantic Orientation</sp-heading>
+    <sp-action-button id="btn-asexual">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/asexual.svg" alt="Asexual flag">
+        Add an asexual flag
+    </sp-action-button>
+    <sp-action-button id="btn-aromantic">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/aromantic.svg" alt="Aromantic flag">
+        Add an aromantic flag
+    </sp-action-button>
+    <sp-action-button id="btn-bisexual">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/bisexual.svg" alt="Bisexual flag">
+        Add a bisexual flag
+    </sp-action-button>
+    <sp-action-button id="btn-pan">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/pan.svg" alt="Pansexual flag">
+        Add a pansexual flag
+    </sp-action-button>
+    <sp-action-button id="btn-lesbian">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/lesbian.svg" alt="Lesbian flag">
+        Add a lesbian flag
+    </sp-action-button>
+    <sp-action-button id="btn-gay-men">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/gay-men.svg" alt="Gay Men's Pride flag">
+        Add a gay men's flag
+    </sp-action-button>
+    <sp-heading size="XS">Gender & Sex</sp-heading>
+    <sp-action-button id="btn-trans">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/trans.svg" alt="Trans flag">
+        Add a trans flag
+    </sp-action-button>
+    <sp-action-button id="btn-non-binary">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/non-binary.svg" alt="Non-binary flag">
+        Add a non-binary flag
+    </sp-action-button>
+    <sp-action-button id="btn-genderqueer">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/genderqueer.svg" alt="Genderqueer flag">
+        Add a genderqueer flag
+    </sp-action-button>
+    <sp-action-button id="btn-genderfluid">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/genderfluid.svg" alt="Genderfluid flag">
+        Add a genderfluid flag
+    </sp-action-button>
+    <sp-action-button id="btn-agender">
+        <img slot="icon" style="width: 18px; height: 18px;" src="img/agender.svg" alt="Agender flag">
+        Add a agender flag
+    </sp-action-button>
+    <footer>
+        <sp-body>More flags coming soon. Code available on <sp-link
+                href="https://github.com/pklaschka/indesign-pride-flagger">GitHub</sp-link>.</sp-body>
+    </footer>
+</uxp-panel>
+</body>
+</html>

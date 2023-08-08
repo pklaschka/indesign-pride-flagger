@@ -1,0 +1,9 @@
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="36" height="calc(36 / 7)" fill="#000"></rect>
+    <rect x="0" y="calc(36/7*1)" width="36" height="calc(36/7)" fill="#bababa"></rect>
+    <rect x="0" y="calc(36/7*2)" width="36" height="calc(36/7)" fill="#fff"></rect>
+    <rect x="0" y="calc(36/7*3)" width="36" height="calc(36/7)" fill="#baf484"></rect>
+    <rect x="0" y="calc(36/7*4)" width="36" height="calc(36/7)" fill="#fff"></rect>
+    <rect x="0" y="calc(36/7*5)" width="36" height="calc(36/7)" fill="#bababa"></rect>
+    <rect x="0" y="calc(36/7*6)" width="36" height="calc(36/7)" fill="#000"></rect>
+</svg>

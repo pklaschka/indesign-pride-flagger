@@ -1,0 +1,7 @@
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="36" height="calc(36/5)" fill="#fe76a2"></rect>
+    <rect x="0" y="calc(36/5*1)" width="36" height="calc(36/5)" fill="#fff"></rect>
+    <rect x="0" y="calc(36/5*2)" width="36" height="calc(36/5)" fill="#bf12d7"></rect>
+    <rect x="0" y="calc(36/5*3)" width="36" height="calc(36/5)" fill="#000"></rect>
+    <rect x="0" y="calc(36/5*4)" width="36" height="calc(36/5)" fill="#303cbe"></rect>
+</svg>
