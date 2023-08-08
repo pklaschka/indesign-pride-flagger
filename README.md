@@ -1,12 +1,12 @@
-![Pride Flagger Plugin Logo](logos/marketing.svg)
+<img alt="Pride Flagger Plugin Logo" src="logos/marketing.svg" width="64"/>
 
 # Pride Flagger for Adobe InDesign
 
 This is a UXP plugin for Adobe InDesign that allows you to add pride flags to your documents. It was created by [Zuri Klaschka (they/them)](https://github.com/pklaschka).
 
-![Rainbow Pride Flag](img/rainbow.svg)
-![Trans Pride Flag](img/trans.svg)
-![Non-binary Pride Flag](img/non-binary.svg)
+<img alt="Rainbow Pride Flag" src="img/rainbow.svg" width="32"/>
+<img alt="Trans Pride Flag" src="img/trans.svg" width="32"/>
+<img alt="Non-binary Pride Flag" src="img/non-binary.svg" width="32"/>
 
 ## Installation
 
