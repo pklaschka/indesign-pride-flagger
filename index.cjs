@@ -35,9 +35,9 @@ const buttons = {
 
 Object.entries(buttons).forEach(([selector, flagFunction]) => {
 	const button = document.querySelector(selector);
-	button.addEventListener('click', () =>
+	button.addEventListener('click', () => {
 		createPrideFlag(flagFunction, `${button.textContent.trim()}`)
-	);
+	});
 });
 
 /**
@@ -64,7 +64,7 @@ entrypoints.setup({
 
 function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 	if (checkSelection() === 'invalid')
-		return window.alert('Please select a rectangle or group to replace, or nothing to create a new page');
+		return document.querySelector('#selection-error-dialog').showModal();
 	app.doScript(() => {
 		const newPage = getOrCreateFlagLocation();
 		flagFunction(newPage);
@@ -118,32 +118,33 @@ function createStripes(flagLocation, colors) {
 	return group;
 }
 
-const alert = document.querySelector('#selection-status-alert');
+const modeAlertContainer = document.querySelector('#selection-status-alert');
 const mode = document.querySelector('#mode');
 
 checkSelection();
+
 function checkSelection() {
 	if (app.selection.length > 1) {
-		alert.classList.add('alert__invalid');
+		modeAlertContainer.classList.add('alert__invalid');
 		mode.textContent = 'Please select only one layer (or nothing)';
 
 		return 'invalid';
 	}
 	if (app.selection.length === 0) {
-		alert.classList.remove('alert__invalid');
+		modeAlertContainer.classList.remove('alert__invalid');
 		mode.textContent = 'Creating a new page (nothing selected)';
 
 		return 'new';
 	}
 	const selectionElement = app.selection[0];
 	if (!(selectionElement instanceof Rectangle) && !(selectionElement instanceof Group)) {
-		alert.classList.add('alert__invalid');
+		modeAlertContainer.classList.add('alert__invalid');
 		mode.textContent = 'Please select a rectangle or group';
 
 		return 'invalid';
 	}
 
-	alert.classList.remove('alert__invalid');
+	modeAlertContainer.classList.remove('alert__invalid');
 	mode.textContent = 'Replacing selection';
 	return 'replace';
 }

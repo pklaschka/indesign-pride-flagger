@@ -27,7 +27,7 @@
         --invalid: #F5A9B8;
     }
 
-/*    Style the .alert with the .alert-text*/
+    /*    Style the .alert with the .alert-text*/
     .alert {
         padding: 4px 0;
         margin-left: -20px;
@@ -55,14 +55,14 @@
         <sp-heading>Pride Flags</sp-heading>
         <sp-body>Add pride flags to your document and show support for the LGBTQIA+ community 🏳️‍⚧️🏳️‍🌈!</sp-body>
     </header>
-<!--
-    <sp-textfield id="txt-message" placeholder="Protect trans kids!">
-        <sp-label slot="label">Text Message</sp-label>
-    </sp-textfield>
-    <br/>
-    <sp-checkbox id="cb-padding">Add padding around the text message</sp-checkbox>
-    <br/>
--->
+    <!--
+        <sp-textfield id="txt-message" placeholder="Protect trans kids!">
+            <sp-label slot="label">Text Message</sp-label>
+        </sp-textfield>
+        <br/>
+        <sp-checkbox id="cb-padding">Add padding around the text message</sp-checkbox>
+        <br/>
+    -->
     <div class="alert" id="selection-status-alert">
         <sp-body class="alert-text">
             Mode: <span id="mode">Loading...</span>
@@ -120,9 +120,22 @@
         Add a agender flag
     </sp-action-button>
     <footer>
-        <sp-body>More flags coming soon. Code available on <sp-link
-                href="https://github.com/pklaschka/indesign-pride-flagger">GitHub</sp-link>.</sp-body>
+        <sp-body>More flags coming soon. Code available on
+            <sp-link
+                    href="https://github.com/pklaschka/indesign-pride-flagger">GitHub
+            </sp-link>
+            .
+        </sp-body>
     </footer>
 </uxp-panel>
+<dialog id="selection-error-dialog" style="">
+    <sp-heading>Invalid selection</sp-heading>
+    <sp-body>
+        Please select a rectangle or group to replace, or nothing to create a new page.
+    </sp-body>
+    <footer style="display: flex; justify-content: flex-end;">
+        <sp-button variant="cta" onclick="document.querySelector('#selection-error-dialog').close()">OK</sp-button>
+    </footer>
+</dialog>
 </body>
 </html>
