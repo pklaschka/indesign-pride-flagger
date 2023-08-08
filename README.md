@@ -4,9 +4,7 @@
 
 This is a UXP plugin for Adobe InDesign that allows you to add pride flags to your documents. It was created by [Zuri Klaschka (they/them)](https://github.com/pklaschka).
 
-<img alt="Rainbow Pride Flag" src="img/rainbow.svg" width="32"/>
-<img alt="Trans Pride Flag" src="img/trans.svg" width="32"/>
-<img alt="Non-binary Pride Flag" src="img/non-binary.svg" width="32"/>
+![Banner with the rainbow flag in the background and a screenshot of a panel with buttons to add pride flags in the foreground. Text: Show Pride! LGBTQIA+ Flags at your Fingertips. by Zuri Klaschka (they/them)](banner.jpg)
 
 ## Installation
 
