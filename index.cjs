@@ -1,22 +1,18 @@
 const {
 	app,
-	VerticalJustification,
-	Justification,
 	ScriptLanguage,
 	UndoModes,
 	Rectangle,
 	Group,
-	Application, ColorSpace
+	Application
 } = require("indesign");
 const { entrypoints } = require("uxp");
+const { getOrCreateColor } = require("./lib/colors.cjs");
 
 // more to get type definitions for the InDesign DOM than anything else:
 if (!(app instanceof Application)) {
 	throw new Error('This script must be run from InDesign');
 }
-
-const cbPadding = document.querySelector('#cb-padding');
-const txtTextfield = document.querySelector('#txt-message');
 
 const buttons = {
 	'#btn-rainbow': createRainbowFlag,
@@ -69,13 +65,6 @@ function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 		const newPage = getOrCreateFlagLocation();
 		flagFunction(newPage);
 	}, ScriptLanguage.UXPSCRIPT, [], UndoModes.ENTIRE_SCRIPT, historyName);
-}
-
-function getTextMessage() {
-	if (!txtTextfield || txtTextfield.value === '') {
-		return undefined;
-	}
-	return txtTextfield.value.toString();
 }
 
 /**
@@ -145,7 +134,6 @@ function checkSelection() {
 	mode.textContent = 'Replacing selection';
 	return 'replace';
 }
-
 
 /**
  * Get the current selection's parent page or create a new page if there is no selection
@@ -281,76 +269,4 @@ function createGenderqueerFlag(newPage) {
 		getOrCreateColor('Genderqueer White', '#fff'),
 		getOrCreateColor('Genderqueer Green', "#49821e")
 	]);
-}
-
-/**
- *
- * @param {{parent: import('indesign').Page, bounds: [number, number, number, number]}} newPage
- */
-function createText({ parent, bounds }) {
-	let textFrame = parent.textFrames.add();
-	textFrame.textFramePreferences.verticalJustification = VerticalJustification.CENTER_ALIGN;
-
-	textFrame.contents = getTextMessage() || '';
-	textFrame.paragraphs.firstItem().justification = Justification.CENTER_ALIGN;
-	textFrame.paragraphs.firstItem().pointSize = 32;
-	textFrame.paragraphs.firstItem().appliedFont = app.fonts.itemByName('Arial');
-
-	const padding = cbPadding.checked ? parent.marginPreferences.columnGutter : 0;
-	textFrame.geometricBounds = [
-		bounds[0] + bounds[2] / 5 * 2 + padding,
-		bounds[1] + parent.marginPreferences.left + padding,
-		bounds[2] / 5 * 3 - padding,
-		bounds[3] - parent.marginPreferences.right - padding
-	];
-	textFrame.fillColor = getOrCreateColor('White', [0, 0, 0, 0]);
-}
-
-function getOrCreateColor(name, colorValue) {
-	let color = app.activeDocument.colors.itemByName(name);
-	colorValue = toColorArray(colorValue);
-	if (!color.isValid) {
-		console.log(`Creating color ${name} because it doesn't exist`);
-		color = app.activeDocument.colors.add({
-			name: name,
-			space: colorValue.length > 3 ? ColorSpace.CMYK : ColorSpace.RGB,
-			colorValue: colorValue,
-			parentColorGroup: getOrCreateColorGroup()
-		});
-		color.space = ColorSpace.CMYK;
-	}
-	return color;
-}
-
-/**
- * Converts a color to an InDesign color array
- * @param {string | number[]} color The color to convert. Can be a hex string or an array of (3) RGB or (4) CMYK values
- * @returns {number[]} The color as an array of either (3) RGB (for HEX and RGB input) or (4) CMYK (for CMYK input) values
- * @throws {Error} If the color is not a valid color
- */
-function toColorArray(color) {
-	if (Array.isArray(color))
-		return color;
-	if (typeof color !== 'string')
-		throw new Error(`Invalid color ${color}`);
-	if (color.startsWith('#'))
-		color = color.substring(1);
-	if (color.length === 3)
-		color = color.split('').map(c => c + c).join('');
-	if (color.length !== 6)
-		throw new Error(`Invalid color ${color}. Must be 3 or 6 characters long`);
-	return [
-		parseInt(color.substring(0, 2), 16),
-		parseInt(color.substring(2, 4), 16),
-		parseInt(color.substring(4, 6), 16)
-	];
-}
-
-function getOrCreateColorGroup() {
-	let colorGroup = app.activeDocument.colorGroups.itemByName('Pride Colors');
-	if (!colorGroup.isValid) {
-		console.log(`Creating color group Pride Colors because it doesn't exist`);
-		colorGroup = app.activeDocument.colorGroups.add('Pride Colors', undefined, {});
-	}
-	return colorGroup;
 }
