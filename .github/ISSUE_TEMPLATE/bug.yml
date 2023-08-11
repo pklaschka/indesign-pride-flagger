@@ -13,7 +13,7 @@ body:
       value: |
         Thank you for reporting a bug. Please fill out the following form to help us fix it.
         
-        Please describe the bug in as much detail as possible. If you have a screenshot or video of the bug, please attach it the comments of this issue.
+        Please describe the bug in as much detail as possible. If you have a screenshot or a video of the bug, please attach it to this issue.
   - type: textarea
     id: bug-description
     validations:

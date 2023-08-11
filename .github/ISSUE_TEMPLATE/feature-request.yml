@@ -13,7 +13,7 @@ body:
       value: |
         Thank you for suggesting a new feature. Please fill out the following form to help us implement it.
         
-        Please describe the feature in as much detail as possible. If you have a screenshot or video of the feature, please attach it in the comment section of this issue.
+        Please describe the feature in as much detail as possible. If you have a screenshot or video of the feature, please attach it to this issue.
   - type: input
     id: role
     attributes:
