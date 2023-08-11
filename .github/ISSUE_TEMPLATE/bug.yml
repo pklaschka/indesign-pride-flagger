@@ -22,21 +22,18 @@ body:
       label: 'Bug Description'
       description: 'Please described what happened.'
       placeholder: 'InDesign crashed after inserting a flag / I got an error message when trying to insert a flag / ...'
-      render: 'markdown'
   - type: textarea
     id: bug-expected
     attributes:
         label: 'Expected behavior'
         description: 'Please describe what you expected to happen.'
         placeholder: 'The flag should have been inserted / The flag should have been inserted and the text should have been formatted / ...'
-        render: 'markdown'
   - type: textarea
     id: bug-steps
     attributes:
         label: 'Steps to reproduce'
         description: 'Please describe the steps to reproduce the bug.'
         placeholder: '1. Open InDesign / 2. Insert a flag / 3. ...'
-        render: 'markdown'
   - type: markdown
     attributes:
       value: |

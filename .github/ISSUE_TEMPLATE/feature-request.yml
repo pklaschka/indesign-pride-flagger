@@ -1,0 +1,50 @@
+name: 'Feature Request (user story)'
+description: 'Suggest a new feature or improvement to help us improve'
+
+assignees:
+  - 'pklaschka'
+
+labels:
+  - 'enhancement'
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature. Please fill out the following form to help us implement it.
+        
+        Please describe the feature in as much detail as possible. If you have a screenshot or video of the feature, please attach it in the comment section of this issue.
+  - type: input
+    id: role
+    attributes:
+        label: 'Role'
+        description: 'Please describe your role (e.g., "graphic designer", "editor", "project manager", ...).'
+        placeholder: 'graphic designer'
+  - type: textarea
+    id: feature-description
+    validations:
+      required: true
+    attributes:
+      label: 'Feature Description'
+      description: 'Please describe the feature you would like to see implemented.'
+      placeholder: 'I would like to be able to insert a flag that ...'
+  - type: textarea
+    id: motivation
+    validations:
+      required: true
+    attributes:
+        label: 'Motivation'
+        description: 'Please describe why you would like to see this feature implemented or how it would help you.'
+        placeholder: 'Because it would help me to ...'
+  - type: markdown
+    attributes:
+      value: |
+        ## Additional Information
+        
+        Please fill out the following information to help us implement the feature.
+  - type: textarea
+    id: additional-information
+    attributes:
+        label: 'Additional Information'
+        description: 'Please provide any additional information that might help us implement this feature.'
+        placeholder: 'I could also imagine this as a bigger feature to ...'
