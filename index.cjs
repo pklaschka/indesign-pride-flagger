@@ -68,10 +68,7 @@ function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 	app.doScript(() => {
 		const newPage = getOrCreateFlagLocation();
 		flagFunction(newPage);
-		if (getTextMessage() !== undefined) {
-			createText(newPage);
-		}
-	}, ScriptLanguage.JAVASCRIPT, [], UndoModes.ENTIRE_SCRIPT, historyName);
+	}, ScriptLanguage.UXPSCRIPT, [], UndoModes.ENTIRE_SCRIPT, historyName);
 }
 
 function getTextMessage() {

@@ -19819,6 +19819,7 @@ declare module 'indesign' {
      * The VBScript language.
      */
     VISUAL_BASIC = 1447185511,
+    UXPSCRIPT,
   }
 
   /**
