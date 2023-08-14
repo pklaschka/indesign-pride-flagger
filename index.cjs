@@ -40,7 +40,10 @@ Object.entries(buttons).forEach(([selector, flagFunction]) => {
  * @type {typeof EventListeners[number]}
  */
 let listener = app.eventListeners.add('afterSelectionChanged', () => {
-	console.log(`Selection changed: ${app.selection.length} items selected`);
+	if (app.documents.length < 1)
+		console.log(`Selection change event triggered with no open documents.`);
+	else
+		console.log(`Selection changed: ${app.selection?.length || 0} items selected`);
 	checkSelection();
 });
 
@@ -56,7 +59,6 @@ entrypoints.setup({
 		}
 	}
 })
-
 
 function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 	if (checkSelection() === 'invalid')
@@ -110,6 +112,14 @@ const mode = document.querySelector('#mode');
 checkSelection();
 
 function checkSelection() {
+	if (app.documents.length < 1) {
+		console.debug('No documents open, aborting')
+		modeAlertContainer.classList.add('alert__invalid');
+		mode.textContent = 'Please open a document';
+
+		return 'invalid';
+	}
+
 	if (app.selection.length > 1) {
 		modeAlertContainer.classList.add('alert__invalid');
 		mode.textContent = 'Please select only one layer (or nothing)';
