@@ -140,6 +140,12 @@ function checkSelection() {
 		return 'invalid';
 	}
 
+	if (!selectionElement.parentPage) {
+		modeAlertContainer.classList.add('alert__invalid');
+		mode.textContent = 'The selected element must be on a page';
+		return 'invalid';
+	}
+
 	modeAlertContainer.classList.remove('alert__invalid');
 	mode.textContent = 'Replacing selection';
 	return 'replace';
