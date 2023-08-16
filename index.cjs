@@ -6,7 +6,6 @@ const {
 	Group,
 	Application
 } = require("indesign");
-const { entrypoints } = require("uxp");
 const { getOrCreateColor } = require("./lib/colors.cjs");
 
 // more to get type definitions for the InDesign DOM than anything else:
@@ -35,30 +34,6 @@ Object.entries(buttons).forEach(([selector, flagFunction]) => {
 		createPrideFlag(flagFunction, `${button.textContent.trim()}`)
 	});
 });
-
-/**
- * @type {typeof EventListeners[number]}
- */
-let listener = app.eventListeners.add('afterSelectionChanged', () => {
-	if (app.documents.length < 1)
-		console.log(`Selection change event triggered with no open documents.`);
-	else
-		console.log(`Selection changed: ${app.selection?.length || 0} items selected`);
-	checkSelection();
-});
-
-entrypoints.setup({
-	plugin: {
-		async create() {
-			console.log(`Plugin create called`);
-		},
-		async destroy() {
-			console.log(`Plugin destroy called`);
-			if (listener.isValid)
-				listener.remove();
-		}
-	}
-})
 
 function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 	if (checkSelection() === 'invalid')
@@ -109,7 +84,7 @@ function createStripes(flagLocation, colors) {
 const modeAlertContainer = document.querySelector('#selection-status-alert');
 const mode = document.querySelector('#mode');
 
-checkSelection();
+setInterval(checkSelection, 500);
 
 function checkSelection() {
 	if (app.documents.length < 1) {
