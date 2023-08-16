@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
+		"noEmit": true,
 		"target": "es5",
 		"allowJs": true,
 		"sourceMap": true
@@ -9,7 +10,7 @@
 		"node_modules"
 	],
 	"files": [
-		"index.js",
+		"index.cjs",
 		"types.d.ts"
 	]
 }
