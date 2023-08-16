@@ -45,6 +45,7 @@ function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 }
 
 /**
+ * Create a stripe in the given parent
  *
  * @param {Page} parent
  * @param bounds
@@ -70,14 +71,25 @@ function createStripe({ parent, bounds }, color, index = 0, total = 1) {
 function createStripes(flagLocation, colors) {
 	const total = colors.length;
 
+	// create a sprite for each color
 	const mapColorsToSprites = (color, index) => {
 		if (color === undefined) return;
 		return createStripe(flagLocation, color, index, total)
 	};
 
+	// filter out empty values
 	const stripes = colors.map(mapColorsToSprites).filter(Boolean);
+
+	// if we have no stripes, return
+	if (stripes.length === 0) return;
+
+	// create a group from the stripes
 	const group = flagLocation.parent.groups.add(stripes);
+
+	// select the group
 	app.selection = [group];
+
+	// return the group
 	return group;
 }
 
