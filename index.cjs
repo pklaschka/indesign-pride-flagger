@@ -4,7 +4,7 @@ const {
     UndoModes,
     Rectangle,
     Group,
-    Application
+    Application, StrokeAlignment, MeasurementUnits
 } = require("indesign");
 const {getOrCreateColor} = require("./lib/colors.cjs");
 
@@ -23,6 +23,7 @@ const buttons = {
     '#btn-gay-men': createGayMenFlag,
     '#btn-trans': createTransFlag,
     '#btn-non-binary': createNonBinaryFlag,
+    '#btn-inter': createInterFlag,
     '#btn-genderqueer': createGenderqueerFlag,
     '#btn-genderfluid': createGenderfluidFlag,
     '#btn-agender': createAgenderFlag,
@@ -47,12 +48,12 @@ function createPrideFlag(flagFunction, historyName = 'Add pride flag') {
 /**
  * Create a stripe in the given parent
  *
- * @param {Page} parent
- * @param bounds
+ * @param {import('indesign').Graphic} parent
+ * @param {[number, number, number, number]} bounds
  * @param color
  * @param index
  * @param total
- * @returns {*}
+ * @returns {Rectangle}
  */
 function createStripe({parent, bounds}, color, index = 0, total = 1) {
     const rect = parent.rectangles.add();
@@ -70,7 +71,7 @@ function createStripe({parent, bounds}, color, index = 0, total = 1) {
 
 /**
  * A list of transforms that can be restored, mapped to their "base" / reset values
- * @type {Record<string, any>}
+ * @type {Omit<FlagLocation, 'parent' | 'bounds'>}
  */
 const restorableTransforms = {
     rotationAngle: 0,
@@ -79,7 +80,25 @@ const restorableTransforms = {
     verticalScale: 100
 }
 
-function createStripes(flagLocation, colors) {
+/**
+ * @typedef {{
+ *     parent: import('indesign').Graphic | import('indesign').Page,
+ *     bounds: [number, number, number, number],
+ *     rotationAngle: number,
+ *     shearAngle: number,
+ *     horizontalScale: number,
+ *     verticalScale: number
+ * }} FlagLocation
+ */
+
+/**
+ * Create a group of stripes (and optionally other elements) and create a group from them
+ * @param {FlagLocation} flagLocation
+ * @param colors
+ * @param {(FlagLocation) => any[]} additionalElements
+ * @returns {*}
+ */
+function createStripes(flagLocation, colors, additionalElements = () => []) {
     const total = colors.length;
 
     // create a sprite for each color
@@ -95,7 +114,9 @@ function createStripes(flagLocation, colors) {
     if (stripes.length === 0) return;
 
     // create a group from the stripes
-    const group = flagLocation.parent.groups.add(stripes);
+    const group = flagLocation.parent.groups.add([...stripes, ...additionalElements(
+        flagLocation,
+    )]);
 
     // Apply transforms
     for (const key in restorableTransforms) {
@@ -151,7 +172,7 @@ function checkSelection() {
 
 /**
  * Get the current selection's parent page or create a new page if there is no selection
- * @returns {{parent: import('indesign').Page, bounds: [number, number, number, number], rotationAngle: number, shearAngle: number, horizontalScale: number, verticalScale: number}}
+ * @returns {FlagLocation}
  */
 function getOrCreateFlagLocation() {
     if (app.selection.length > 1) throw new Error('Please select only one layer');
@@ -170,6 +191,9 @@ function getOrCreateFlagLocation() {
     console.debug('Selection is', selectionElement)
 
     // store the current transforms
+    /**
+     * @type {Omit<FlagLocation, 'parent' | 'bounds'>}
+     */
     const transforms = Object.keys(restorableTransforms).reduce((acc, key) => {
         acc[key] = selectionElement[key];
         return acc;
@@ -195,6 +219,36 @@ function createTransFlag(newPage) {
         getOrCreateColor('Trans Flag Pink', '#F5A9B8'),
         getOrCreateColor('Trans Flag Blue', '#5BCFFB'),
     ])
+}
+
+function createInterFlag(newPage) {
+    createStripes(newPage, [
+        getOrCreateColor('Inter Yellow', '#FFD500'),
+    ], flagLocation => {
+        const oval = flagLocation.parent.ovals.add();
+
+        const smallerDimension = Math.min(flagLocation.bounds[2] - flagLocation.bounds[0], flagLocation.bounds[3] - flagLocation.bounds[1]);
+        const innerDimension = smallerDimension * 0.4;
+        oval.geometricBounds = [
+            flagLocation.bounds[0] + (flagLocation.bounds[2] - flagLocation.bounds[0]) / 2 - innerDimension / 2,
+            flagLocation.bounds[1] + (flagLocation.bounds[3] - flagLocation.bounds[1]) / 2 - innerDimension / 2,
+            flagLocation.bounds[0] + (flagLocation.bounds[2] - flagLocation.bounds[0]) / 2 + innerDimension / 2,
+            flagLocation.bounds[1] + (flagLocation.bounds[3] - flagLocation.bounds[1]) / 2 + innerDimension / 2,
+        ];
+
+        const originalVerticalMeasurementUnits = app.activeDocument.viewPreferences.verticalMeasurementUnits;
+        app.activeDocument.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+
+        oval.strokeWeight = ((oval.geometricBounds[2] - oval.geometricBounds[0]) * 0.225) + 'mm';
+        app.activeDocument.viewPreferences.verticalMeasurementUnits = originalVerticalMeasurementUnits;
+
+        oval.strokeAlignment = StrokeAlignment.OUTSIDE_ALIGNMENT;
+
+
+        console.log(oval.strokeWeight)
+        oval.strokeColor = getOrCreateColor('Intersex Purple', '#7A02AA');
+        return [oval];
+    })
 }
 
 function createRainbowFlag(newPage) {
